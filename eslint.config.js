@@ -13,6 +13,10 @@ export default tseslint.config(
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    env: {
+      browser: true,
+      node: true,
+    },
     plugins: {
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
@@ -24,5 +28,5 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
     },
-  },
+  }
 )
