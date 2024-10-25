@@ -1,9 +1,11 @@
-import { createLazyFileRoute } from '@tanstack/react-router'
+import { createLazyFileRoute, useLoaderData } from '@tanstack/react-router'
 
 export const Route = createLazyFileRoute('/about')({
   component: About,
 })
 
 function About() {
-  return <div className="p-2">Hello from About!</div>
+  const data = useLoaderData({ from: '/about' })
+
+  return <div className="p-2">{data}</div>
 }
