@@ -19,6 +19,9 @@ const Header = () => {
         <Link to="/pokemon" className="[&.active]:font-bold">
           Pokemon
         </Link>
+        <Link to="/search" className="[&.active]:font-bold">
+          Search
+        </Link>
       </div>
       <div className="p-2">
         <SignedOut>
