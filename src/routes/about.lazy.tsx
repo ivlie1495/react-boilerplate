@@ -1,4 +1,14 @@
-import { createLazyFileRoute } from '@tanstack/react-router'
+import { createLazyFileRoute, useBlocker } from '@tanstack/react-router'
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button.tsx'
 
 export const Route = createLazyFileRoute('/about')({
   component: About,
@@ -7,5 +17,28 @@ export const Route = createLazyFileRoute('/about')({
 function About() {
   const data = Route.useLoaderData()
 
-  return <div className="p-2">{data}</div>
+  const { proceed, reset, status } = useBlocker()
+
+  return (
+    <div className="p-2">
+      <div>{data}</div>
+      <Dialog open={status === 'blocked'}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Are you absolutely sure?</DialogTitle>
+            <DialogDescription>
+              This action cannot be undone. This will permanently delete your
+              account and remove your data from our servers.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={reset}>
+              No
+            </Button>
+            <Button onClick={proceed}>Yes</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </div>
+  )
 }
