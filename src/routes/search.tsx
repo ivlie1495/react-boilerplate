@@ -31,7 +31,10 @@ function Search() {
           placeholder="Search"
           onChange={(e) =>
             navigate({
-              search: (search) => ({ ...search, query: e.target.value }),
+              search: (search: Record<string, unknown>) => ({
+                ...search,
+                query: e.target.value,
+              }),
             })
           }
         />

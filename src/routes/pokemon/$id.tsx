@@ -1,10 +1,17 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { getPokemon } from '@/api/pokemon'
 
 export const Route = createFileRoute('/pokemon/$id')({
   component: PokemonDetail,
   loader: async ({ params }) => await getPokemon(params.id),
+  beforeLoad: ({ context }) => {
+    if (!context.user?.id) {
+      throw redirect({
+        to: '/',
+      })
+    }
+  },
 })
 
 function PokemonDetail() {
@@ -14,7 +21,7 @@ function PokemonDetail() {
   return (
     <div className="p-2">
       <h2>
-        ({id}) {data.name}
+        Pokemon ({id}) {data.name}
       </h2>
       <img src={data.sprites.front_default} alt={data.name} />
       <dl>
