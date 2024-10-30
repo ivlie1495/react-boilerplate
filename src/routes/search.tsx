@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { Input } from '@/components/ui/input'
 
@@ -15,6 +15,13 @@ export const Route = createFileRoute('/search')({
   component: Search,
   validateSearch: (searchParams: SearchParams) =>
     searchParamsSchema.parse(searchParams),
+  beforeLoad: ({ context }) => {
+    if (!context.user?.id) {
+      throw redirect({
+        to: '/',
+      })
+    }
+  },
 })
 
 function Search() {
