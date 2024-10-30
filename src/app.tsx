@@ -1,4 +1,4 @@
-import { useUser } from '@clerk/clerk-react'
+import { RedirectToSignIn, useUser } from '@clerk/clerk-react'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 
 // Import the generated route tree
@@ -17,7 +17,11 @@ function App() {
     return null
   }
 
-  return <RouterProvider router={router} context={{ user: { id: user?.id } }} />
+  if (isLoaded && !user?.id) {
+    return <RedirectToSignIn />
+  }
+
+  return <RouterProvider router={router} context={{ user: { id: user.id } }} />
 }
 
 export default App
