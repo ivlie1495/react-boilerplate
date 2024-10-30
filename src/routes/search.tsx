@@ -7,14 +7,13 @@ interface SearchParams {
   query: string
 }
 
-const searchParamsSchema = z.object({
+const paramsSchema = z.object({
   query: z.string().optional(),
 })
 
 export const Route = createFileRoute('/search')({
   component: Search,
-  validateSearch: (searchParams: SearchParams) =>
-    searchParamsSchema.parse(searchParams),
+  validateSearch: (params: SearchParams) => paramsSchema.parse(params),
   beforeLoad: ({ context }) => {
     if (!context.user?.id) {
       throw redirect({
