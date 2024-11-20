@@ -14,7 +14,7 @@ export const getPokemon = async (id: string): Promise<PokemonDetail> => {
   return data
 }
 
-interface Pokemon {
+export interface Pokemon {
   id: string
   name: string
 }

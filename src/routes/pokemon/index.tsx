@@ -1,6 +1,6 @@
 import { createFileRoute, Link, redirect } from '@tanstack/react-router'
 
-import { getPokemonList } from '@/api/pokemon'
+import { getPokemonList, Pokemon } from '@/api/pokemon'
 
 export const Route = createFileRoute('/pokemon/')({
   component: PokemonList,
@@ -15,7 +15,7 @@ export const Route = createFileRoute('/pokemon/')({
 })
 
 function PokemonList() {
-  const results = Route.useLoaderData()
+  const results = Route.useLoaderData() as Pokemon[]
 
   return (
     <div className="p-2">
