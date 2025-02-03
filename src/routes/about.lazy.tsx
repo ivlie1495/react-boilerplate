@@ -1,14 +1,4 @@
-import { createLazyFileRoute, useBlocker } from '@tanstack/react-router'
-
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button.tsx'
+import { createLazyFileRoute } from '@tanstack/react-router'
 
 export const Route = createLazyFileRoute('/about')({
   component: About,
@@ -17,12 +7,12 @@ export const Route = createLazyFileRoute('/about')({
 function About() {
   const data = Route.useLoaderData()
 
-  const { proceed, reset, status } = useBlocker()
+  // const { proceed, reset, status } = useBlocker()
 
   return (
     <div className="p-2">
       <div>{data}</div>
-      <Dialog open={status === 'blocked'}>
+      {/* <Dialog open={status === 'blocked'}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Are you absolutely sure?</DialogTitle>
@@ -38,7 +28,7 @@ function About() {
             <Button onClick={proceed}>Yes</Button>
           </DialogFooter>
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
     </div>
   )
 }
