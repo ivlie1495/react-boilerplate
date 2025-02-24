@@ -8,14 +8,19 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createFileRoute } from '@tanstack/react-router'
+
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as SearchImport } from './routes/search'
 import { Route as AboutImport } from './routes/about'
-import { Route as IndexImport } from './routes/index'
 import { Route as PokemonIndexImport } from './routes/pokemon/index'
 import { Route as PokemonIdImport } from './routes/pokemon/$id'
+
+// Create Virtual Routes
+
+const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
 
@@ -31,7 +36,7 @@ const AboutRoute = AboutImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
 
-const IndexRoute = IndexImport.update({
+const IndexLazyRoute = IndexLazyImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
@@ -57,7 +62,7 @@ declare module '@tanstack/react-router' {
       id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexImport
+      preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
     '/about': {
@@ -94,7 +99,7 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof IndexLazyRoute
   '/about': typeof AboutRoute
   '/search': typeof SearchRoute
   '/pokemon/$id': typeof PokemonIdRoute
@@ -102,7 +107,7 @@ export interface FileRoutesByFullPath {
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/': typeof IndexLazyRoute
   '/about': typeof AboutRoute
   '/search': typeof SearchRoute
   '/pokemon/$id': typeof PokemonIdRoute
@@ -111,7 +116,7 @@ export interface FileRoutesByTo {
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/': typeof IndexRoute
+  '/': typeof IndexLazyRoute
   '/about': typeof AboutRoute
   '/search': typeof SearchRoute
   '/pokemon/$id': typeof PokemonIdRoute
@@ -128,7 +133,7 @@ export interface FileRouteTypes {
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  IndexLazyRoute: typeof IndexLazyRoute
   AboutRoute: typeof AboutRoute
   SearchRoute: typeof SearchRoute
   PokemonIdRoute: typeof PokemonIdRoute
@@ -136,7 +141,7 @@ export interface RootRouteChildren {
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  IndexLazyRoute: IndexLazyRoute,
   AboutRoute: AboutRoute,
   SearchRoute: SearchRoute,
   PokemonIdRoute: PokemonIdRoute,
@@ -161,7 +166,7 @@ export const routeTree = rootRoute
       ]
     },
     "/": {
-      "filePath": "index.tsx"
+      "filePath": "index.lazy.tsx"
     },
     "/about": {
       "filePath": "about.tsx"
